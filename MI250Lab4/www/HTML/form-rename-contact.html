@@ -24,6 +24,8 @@
     </ul>
 
 <!-- Start Of the Form. The form will be used to send data to python script -->
+<!-- On submit, call the action script -->
+<!-- Before submitting the form to action script, check if the user filled all the data by calling the function below -->
 <div class="main-content">
     <form name="myForm" onsubmit="return validateForm()" class="form-validation" method="post" action="../cgi-bin/rename-Contact.py">
 
@@ -57,6 +59,8 @@
 <!-- Import Jquery Library -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
+// This function checks if the user filled all the fields of the form corrected before submitting.
+// The function returns true if all the fields are filled up or false otherwise
 function validateForm() {
     var first_name = document.forms["myForm"]["first_name"].value;
     var last_name = document.forms["myForm"]["last_name"].value;

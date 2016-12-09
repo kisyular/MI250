@@ -4,41 +4,37 @@
 # which is usually:
 #!/usr/bin/env python
 
-
-# Lecture 4 - CSC210 Fall 2015
-# Philip Guo
-
-# To run, start AMPSS and visit URLs like the following to insert new
-# entries into the database, then check your database's contents using
-# lecture4-query-database.py
-#
-# http://localhost/cgi-bin/lecture4.py?my_name=Joe&my_age=32&my_image=../cat.jpg
-# http://localhost/cgi-bin/lecture4.py?my_name=Donna&my_age=37&my_image=../dog.jpg
-
-# useful for debugging
+# Import necessary modules such as cgitb and cgi which enables us to run cgi apps and get data easily from forms
 import cgitb
 cgitb.enable()
-
 import cgi
+form = cgi.FieldStorage()
 import sqlite3
 import re
 form = cgi.FieldStorage()
 
 conn = sqlite3.connect('phoneContacts.db')
 c = conn.cursor()
-# insert new user data into the database
 
+
+# Get values from the form such as the first_name, last_name, phone_number, email_address and message
+# store this information in  variables
 try:
     names = form['search'].value
     names = str(names)
     temporary = names
     names = re.split(', ', names)
+
+    # If the user enters only one name such as the first name, assume the second name is empty
     if len(names)==0:
         first_name = "empty"
         last_name ="empty"
     elif len(names)!=0 and len(names) > 1:
         first_name =names[0].title()
         last_name = names[1].title()
+
+    # If user enters only one letter of the name, assume the user thinks there is either a contact which is first_name or last_name
+    #starts wth the supplied character and process the request as show further below
     else:
         temporary=temporary.split()
         if len(temporary)==1:
@@ -47,21 +43,23 @@ try:
         else:
             first_name = temporary[0].title()
             last_name = temporary[1].title()
+# This is to curb a user typing empty spaces as a name
 except KeyError:
     first_name = "empty"
     last_name ="empty"
 
+# Look if those entered names exist in the database
 c.execute("select FirstName from phone_contact where FirstName=?", (first_name,))
 dataFN = c.fetchall()
 c.execute("select LastName from phone_contact where LastName=?", (last_name,))
 dataLN = c.fetchall()
 
-# create a database file named 'people.db' if it doesn't exist yet.
-# if this file already exists, then the program will quit.
 
 conn.commit()
 
 import datetime
+
+
 # print the http header
 print ("Content-Type: text/html")
 print # don't forget the extra newline
@@ -69,6 +67,8 @@ print # don't forget the extra newline
 print ('<html>')
 print (' <head>')
 print ('<link rel="stylesheet" href="../HTML/assets/demo.css">')
+
+# Make a easy navigation to go back to the main menu
 print ('''<ul>
     <li><a href="../index.html">HOME</a></li>
     <li><a href="../HTML/form-add.html">ADD CONTACT</a></li>
@@ -81,7 +81,8 @@ print ('		<title>')
 print ('			PHONE BOOK DIRECTORY')
 print ('		</title>')
 print ('		<style type="text/css">')
-# in Python, use ''' triple quotes ''' to create a multi-line string
+
+#Use the CSS attributes to style up the file
 print ('''
             h1 {
 				font-size: 100px;
@@ -114,24 +115,27 @@ print ('''
 ''')
 print ('	<body>')
 print ('		<h2>')
-#print (str(datetime.datetime.now()))
 print ('		</h2>')
 
 # print out the data for all users in the database
+
 print '<table>'
 print ('		<h3>These Contacts Below Matched One Of Your Criteria </h3>')
 for row in c.execute('SELECT * FROM phone_contact;'):
+    # If the first_name and last_name are in the database, then display the Contacts information
     if dataFN and dataLN:
         if row[1] ==first_name.title() and row[2] ==last_name.title():
             print '<tr>{}</tr>'.format('  '.join(['<td>{}</td>'.format(col) for col in row]))
+    # If only one of the names entered are in the database, display any contact whose first_name or last_name appears as entered
     elif dataFN or dataLN:
         if row[1] ==first_name.title() or row[2] ==last_name.title():
             print '<tr>{}</tr>'.format('  '.join(['<td>{}</td>'.format(col) for col in row]))
+
+    # If the user just enters only one letter, display any contact whose first_name or last_name starts with such a letter
     elif len(first_name)==1 or len(last_name)==1:
         if row[1][0] ==first_name[0] or row[2][0] ==last_name[0]:
             print '<tr>{}</tr>'.format('  '.join(['<td>{}</td>'.format(col) for col in row]))
 
-    #print '<tr>{}</tr>'.format(''.join(['<td>{}</td>'.format(col) for col in row]))
 
 print '</table>'
 conn.close()

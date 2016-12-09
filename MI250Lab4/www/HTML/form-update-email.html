@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+<!-- Import the necessary meta data and scripts then the stylesheet -->
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"> </head>
 <header>
     <h1>PHONE BOOK</h1> </header>
+    <!-- The Unordered List below shows buttons which enables the user to navigate to different files easily -->
     <ul>
         <li><a href="form-update.html">HOME</a></li>
         <li><a href="form-update-phone.html">EDIT PHONE NUMBER</a></li>
@@ -19,6 +20,9 @@
         <li><a href="form-rename-contact.html">RENAME CONTACT</a></li>
     </ul>
 <div class="main-content">
+  <!-- Start Of the Form. The form will be used to send data to python script -->
+  <!-- On submit, call the action script -->
+  <!-- Before submitting the form to action script, check if the user filled all the data by calling the function below -->
     <form name="myForm" onsubmit="return validateForm()" class="form-validation" method="post" action="../cgi-bin/editEmail.py">
         <div class="form-title-row">
             <h1>Email Update</h1>
@@ -45,6 +49,8 @@
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
+// This function checks if the user filled all the fields of the form corrected before submitting.
+// The function returns true if all the fields are filled up or false otherwise
 function validateForm() {
     var first_name = document.forms["myForm"]["first_name"].value;
     var last_name = document.forms["myForm"]["last_name"].value;

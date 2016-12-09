@@ -4,33 +4,21 @@
 # which is usually:
 #!/usr/bin/env python
 
-
-# Lecture 4 - CSC210 Fall 2015
-# Philip Guo
-
-# To run, start AMPSS and visit URLs like the following to insert new
-# entries into the database, then check your database's contents using
-# lecture4-query-database.py
-#
-# http://localhost/cgi-bin/lecture4.py?my_name=Joe&my_age=32&my_image=../cat.jpg
-# http://localhost/cgi-bin/lecture4.py?my_name=Donna&my_age=37&my_image=../dog.jpg
-
-# useful for debugging
+# Import necessary modules such as cgitb and cgi which enables us to run cgi apps and get data easily from forms
 import cgitb
 cgitb.enable()
 
 import cgi
 form = cgi.FieldStorage()
 
+# Get values from the form submitted
 first_name = form['first_name'].value.title()
 last_name = form['last_name'].value.title()
 email_address = form['email_address'].value
 
-
-# insert new user data into the database
 import sqlite3
-# create a database file named 'people.db' if it doesn't exist yet.
-# if this file already exists, then the program will quit.
+
+# Check if the first_name or last_name are in the sqlite3 database
 conn = sqlite3.connect('phoneContacts.db')
 c = conn.cursor()
 c.execute("select FirstName from phone_contact where FirstName=?", (first_name,))
@@ -38,6 +26,8 @@ dataFN = c.fetchall()
 c.execute("select LastName from phone_contact where LastName=?", (last_name,))
 dataLN = c.fetchall()
 import datetime
+
+
 # print the http header
 print ("Content-Type: text/html")
 print # don't forget the extra newline
@@ -46,6 +36,7 @@ print ('<html>')
 
 print (' <head>')
 print ('<link rel="stylesheet" href="../HTML/assets/demo.css">')
+# Display a navigation menu
 print ('''<ul>
     <li><a href="../index.html">HOME</a></li>
     <li><a href="../HTML/form-add.html">ADD CONTACT</a></li>
@@ -58,7 +49,8 @@ print ('		<title>')
 print ('			PHONE BOOK DIRECTORY')
 print ('		</title>')
 print ('		<style type="text/css">')
-# in Python, use ''' triple quotes ''' to create a multi-line string
+
+# Use custom style from css to style the html file
 print ('''
 			h1 {
 				font-size: 100px;
@@ -93,9 +85,13 @@ print ('''
 	</head>
 ''')
 print ('		<h2>PHONE BOOK</h2>')
+
+# If the last_name and first_name exists in the database, then update the contact email
 if dataFN and  dataLN:
     c.execute('''UPDATE phone_contact SET Email = ? WHERE FirstName = ? ''', (email_address, first_name))
     print ('<h3> New Email ' + str(email_address) +" updated for " + first_name + "  " + last_name +' on ' +  str(datetime.datetime.now()) + '</h3>')
+
+# Else let the user know that such names are not in the database
 else:
     print ('<h3> The contact with name ' + first_name + "  " + last_name +' does not exists <br/><br/>' + str(datetime.datetime.now())+ '</h3>')
 conn.commit()

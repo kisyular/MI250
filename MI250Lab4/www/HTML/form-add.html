@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 
+<!-- Import the necessary meta data and scripts then the stylesheet -->
 <head>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta charset="utf-8">
@@ -11,6 +12,8 @@
     <link rel="stylesheet" href="assets/form-register.css"> </head>
 <header>
     <h1>PHONE BOOK</h1> </header>
+
+<!-- This is a navigation menu which will appear at the top of the page -->
 <ul>
     <li><a href="../index.html">HOME</a></li>
     <li><a href="form-add.html" class="active">ADD CONTACT</a></li>
@@ -22,6 +25,8 @@
 <div class="main-content">
   <div style="float: left; margin-left: 30%">
     <!-- You only need this form and the form-register.css -->
+    <!-- On submit, call the action script -->
+    <!-- Before submitting the form to action script, check if the user filled all the data by calling the function below -->
     <form name="myForm" onsubmit="return validateForm()" method="post" action="../cgi-bin/form-add-contact.py">
       <h3 style="margin-top: 10px;">First Name</h3>
      <input name="first_name" type=text size="30" />
@@ -43,6 +48,9 @@
   </div>
 </div>
 <script>
+
+// This function checks if the user filled all the fields of the form corrected before submitting.
+// The function returns true if all the fields are filled up or false otherwise
 function validateForm() {
     var first_name = document.forms["myForm"]["first_name"].value;
     var last_name = document.forms["myForm"]["last_name"].value;
