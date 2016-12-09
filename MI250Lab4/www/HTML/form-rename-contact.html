@@ -2,29 +2,37 @@
 <html>
 
 <head>
+    <!-- Add necessary style sheets and views(mata) -->
     <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>UPDATE CONTACT</title>
+    <title>Rename Contact</title>
     <link rel="stylesheet" href="assets/demo.css">
     <link rel="stylesheet" href="assets/form-validation.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"> </head>
 <header>
+    <!-- This is the name which will appear to show what is happening -->
     <h1>PHONE BOOK</h1> </header>
+
+    <!-- The Unordered List below shows buttons which enables the user to navigate to different files easily -->
     <ul>
         <li><a href="form-update.html">HOME</a></li>
-        <li><a href="form-update-phone" >EDIT PHONE NUMBER</a></li>
+        <li><a href="form-update-phone.html" >EDIT PHONE NUMBER</a></li>
         <li><a href="form-update-email.html">EDIT EMAIL ADDRESS</a></li>
         <li><a href="form-rename-contact.html" class="active">RENAME CONTACT</a></li>
     </ul>
+
+<!-- Start Of the Form. The form will be used to send data to python script -->
 <div class="main-content">
-    <!-- You only need this form and the form-validation.css -->
-    <form class="form-validation" method="post" action="../cgi-bin/rename-Contact.py">
+    <form name="myForm" onsubmit="return validateForm()" class="form-validation" method="post" action="../cgi-bin/rename-Contact.py">
+
+      <!-- Ask the User to enter the neccessary information such as their name, phone number and email -->
         <div class="form-title-row">
             <h1>Rename Contact</h1>
-            <p>
+            <h3>
               Please enter the FirstName and LastName of the contact to rename
-            </p> </div>
+            </h3> </div>
         <div class="form-row form-input-name-row">
             <label> <span>First Name</span>
                 <input type="text" name="first_name"> </label>
@@ -39,25 +47,27 @@
                   <label> <span>Enter New Last Name</span>
                       <input type="text" name="new_last_name"> </label>
             </div>
-
+        <!-- Submit the data Entered by the user -->
         <div class="form-row">
-            <button type="submit">Submit Form</button>
+            <button type="submit">Rename Contact</button>
         </div>
     </form>
 </div>
+
+<!-- Import Jquery Library -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function() {
-        // Here is how to show an error message next to a form field
-        var errorField = $('.form-input-name-row');
-        // Adding the form-invalid-data class will show
-        // the error message and the red x for that field
-        errorField.addClass('form-invalid-data');
-        errorField.find('.form-invalid-data-info').text('Please enter your name');
-        // Here is how to mark a field with a green check mark
-        var successField = $('.form-input-email-row');
-        successField.addClass('form-valid-data');
-    });
+function validateForm() {
+    var first_name = document.forms["myForm"]["first_name"].value;
+    var last_name = document.forms["myForm"]["last_name"].value;
+    var new_first_name = document.forms["myForm"]["new_first_name"].value;
+    var new_last_name  = document.forms["myForm"]["new_last_name"].value;
+    if (first_name == "" || last_name =="" || new_last_name=="" || new_first_name == "") {
+        alert("You Left Some Of the Fields Empty");
+        return false;
+    }
+}
+
 </script>
 </body>
 

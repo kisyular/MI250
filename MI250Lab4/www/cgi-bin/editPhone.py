@@ -45,6 +45,7 @@ print # don't forget the extra newline
 print ('<html>')
 
 print (' <head>')
+print ('<link rel="stylesheet" href="../HTML/assets/demo.css">')
 print ('''<ul>
     <li><a href="../index.html">HOME</a></li>
     <li><a href="../HTML/form-add.html" class="active">ADD CONTACT</a></li>
@@ -78,16 +79,20 @@ print ('''
             color: aqua;
             background-color: black;
             }
+            h2 {
+            margin-left: 45%;
+            }
             h3 {
             color: red;
-            margin-top: 5%;
-            margin-left: 35%;
+            margin-top: 1%;
+            margin-left: 25%;
             margin-bottom: 1%;
             }
 
 		</style>
 	</head>
 ''')
+print ('		<h2>PHONE BOOK</h2>')
 if dataFN and  dataLN:
     c.execute('''UPDATE phone_contact SET PhoneNumber = ? WHERE FirstName = ? ''', (phone_number, first_name))
     print ('<h3> New phone number ' + str(phone_number) +" updated for" + first_name + "  " + last_name +' on ' +  str(datetime.datetime.now()) + '</h3>')
@@ -96,7 +101,6 @@ else:
     print (str(datetime.datetime.now()))
 conn.commit()
 print ('	<body>')
-print ('		<h2>PHONE BOOK</h2>')
 print ('		</h2>')
 
 conn.close()

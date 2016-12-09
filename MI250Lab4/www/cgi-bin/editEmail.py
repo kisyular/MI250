@@ -79,10 +79,13 @@ print ('''
             color: aqua;
             background-color: black;
             }
+            h2 {
+            margin-left: 45%;
+            }
             h3 {
             color: red;
-            margin-top: 5%;
-            margin-left: 35%;
+            margin-top: 1%;
+            margin-left: 25%;
             margin-bottom: 1%;
             }
 

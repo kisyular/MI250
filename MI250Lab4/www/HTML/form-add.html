@@ -2,26 +2,27 @@
 <html>
 
 <head>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> ADD CONTACT</title>
+    <title> Add Contact</title>
     <link rel="stylesheet" href="assets/demo.css">
     <link rel="stylesheet" href="assets/form-register.css"> </head>
 <header>
     <h1>PHONE BOOK</h1> </header>
 <ul>
-    <<li><a href="../index.html">HOME</a></li>
-    <li><a href="form-add.html">ADD CONTACT</a></li>
+    <li><a href="../index.html">HOME</a></li>
+    <li><a href="form-add.html" class="active">ADD CONTACT</a></li>
     <li><a href="form-display-everything.html">DISPLAY PHONE BOOK</a></li>
-    <li><a href="form-update.html" class="active">UPDATE CONTACT</a></li>
+    <li><a href="form-update.html">UPDATE CONTACT</a></li>
     <li><a href="form-search.html" >SEARCH CONTACT</a></li>
     <li><a href="form-delete-contact.html" >DELETE CONTACT</a></li>
 </ul>
 <div class="main-content">
   <div style="float: left; margin-left: 30%">
     <!-- You only need this form and the form-register.css -->
-    <form method="post" action="../cgi-bin/form-add-contact.py">
+    <form name="myForm" onsubmit="return validateForm()" method="post" action="../cgi-bin/form-add-contact.py">
       <h3 style="margin-top: 10px;">First Name</h3>
      <input name="first_name" type=text size="30" />
     <br/>
@@ -41,6 +42,19 @@
     </form>
   </div>
 </div>
+<script>
+function validateForm() {
+    var first_name = document.forms["myForm"]["first_name"].value;
+    var last_name = document.forms["myForm"]["last_name"].value;
+    var phone_number = document.forms["myForm"]["phone_number"].value;
+    var email_address  = document.forms["myForm"]["email_address"].value;
+    var message  = document.forms["myForm"]["message"].value;
+    if (first_name == "" || last_name =="" || phone_number=="" || email_address == "" || message =="") {
+        alert("You Left Some Of the Fields Empty");
+        return false;
+    }
+}
+</script>
 </body>
 
 </html>

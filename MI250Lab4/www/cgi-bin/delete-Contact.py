@@ -59,10 +59,9 @@ print ('		</title>')
 print ('		<style type="text/css">')
 # in Python, use ''' triple quotes ''' to create a multi-line string
 print ('''
-            h1, h2 {
+			h1 {
 				font-size: 100px;
 				font-family: arial;
-                margin-left: 30%;
 			}
 			img {
 				width: 300px;
@@ -79,10 +78,13 @@ print ('''
             color: aqua;
             background-color: black;
             }
+            h2 {
+            margin-left: 45%;
+            }
             h3 {
             color: red;
-            margin-top: 5%;
-            margin-left: 35%;
+            margin-top: 1%;
+            margin-left: 25%;
             margin-bottom: 1%;
             }
 

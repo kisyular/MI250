@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>UPDATE CONTACT</title>
+    <title>Update Email</title>
     <link rel="stylesheet" href="assets/demo.css">
     <link rel="stylesheet" href="assets/form-validation.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"> </head>
@@ -13,17 +14,17 @@
     <h1>PHONE BOOK</h1> </header>
     <ul>
         <li><a href="form-update.html">HOME</a></li>
-        <li><a href="form-update-phone">EDIT PHONE NUMBER</a></li>
+        <li><a href="form-update-phone.html">EDIT PHONE NUMBER</a></li>
         <li><a href="form-update-email.html"  class="active">EDIT EMAIL ADDRESS</a></li>
         <li><a href="form-rename-contact.html">RENAME CONTACT</a></li>
     </ul>
 <div class="main-content">
-    <form class="form-validation" method="post" action="../cgi-bin/editEmail.py">
+    <form name="myForm" onsubmit="return validateForm()" class="form-validation" method="post" action="../cgi-bin/editEmail.py">
         <div class="form-title-row">
-            <h1>Enail Update</h1>
-          <p>
+            <h1>Email Update</h1>
+          <h3>
             Please enter the FirstName and LastName of the contact to change their email
-          </p> </div>
+          </h3> </div>
         <div class="form-row form-input-name-row">
             <label> <span>First Name</span>
                 <input type="text" name="first_name"> </label>
@@ -38,23 +39,21 @@
             </div>
 
         <div class="form-row">
-            <button type="submit">Submit Form</button>
+            <button type="submit">Update Email Address</button>
         </div>
     </form>
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function() {
-        // Here is how to show an error message next to a form field
-        //var errorField = $('.form-input-name-row');
-        // Adding the form-invalid-data class will show
-        // the error message and the red x for that field
-        //errorField.addClass('form-invalid-data');
-        //errorField.find('.form-invalid-data-info').text('Please enter your name');
-        // Here is how to mark a field with a green check mark
-        //var successField = $('.form-input-email-row');
-        //successField.addClass('form-valid-data');
-    });
+function validateForm() {
+    var first_name = document.forms["myForm"]["first_name"].value;
+    var last_name = document.forms["myForm"]["last_name"].value;
+    var email_address  = document.forms["myForm"]["email_address"].value;
+    if (first_name == "" || last_name =="" || email_address == "") {
+        alert("You Left Some Of the Fields Empty");
+        return false;
+    }
+}
 </script>
 </body>
 
